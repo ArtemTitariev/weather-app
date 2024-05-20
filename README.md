@@ -8,8 +8,7 @@
 ## Дана система є клієнтським додатком, що інтегрує API https://github.com/Izakharchenko/weather-api
 
 ## Встановлення: 
-    ```
     composer install
     npm install
     cp .env.example .env
-    ```
+    
