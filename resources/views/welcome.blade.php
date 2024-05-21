@@ -168,6 +168,9 @@
         </div>
     </body> --}}
     <body class="bg-light text-dark font-sans">
+        <p>{{ session('api_token') }}</p>
+        <p>{{ session('user')->name }}</p>
+
         <div class="container mx-auto p-4">
             <h1 class="text-primary font-serif">Welcome to Laravel with Tailwind CSS</h1>
             <p class="font-mono">This is a paragraph with a monospace font.</p>
