@@ -15,13 +15,11 @@ class AuthController extends Controller
         $this->client = $client;
     }
 
-    // Відображення форми реєстрації
     public function showRegistrationForm()
     {
         return view('auth.register');
     }
 
-    // Обробка реєстрації
     public function register(Request $request)
     {
         $request->validate([
@@ -67,7 +65,6 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    // Обробка авторизації
     public function login(Request $request)
     {
         $request->validate([
@@ -96,20 +93,17 @@ class AuthController extends Controller
         }
     }
 
-    // Обробка виходу з облікового запису
     public function logout(Request $request)
     {
         try {          
             $this->client->request('POST', 'logout');
 
-            // Видалення токену з сесії
             Session::forget('api_token');
             Session::forget('user');
 
             return redirect()->route('home');
         } catch (\Exception $e) {
-            // return redirect()->route('login')->withErrors(['error' => __('auth.error')]);
-            return redirect()->route('login')->withErrors(['error' => $e->getMessage()]);
+            return back()->withErrors(['error' => __('auth.error')]);
         }
     }
 }
