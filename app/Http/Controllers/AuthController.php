@@ -27,6 +27,7 @@ class AuthController extends Controller
             'name' => 'required|string|min:2|max:255',
             'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:6|max:16|confirmed',
+            'password_confirmation' => 'required|string|min:6|max:16',
         ]);
 
         try {
@@ -41,7 +42,9 @@ class AuthController extends Controller
             $data = json_decode($response->getBody(), true);
 
             if (isset($data['errors'])) {  
-                return back()->withErrors(['error' => $data['errors']]);
+                return back()
+                    ->withInput()
+                    ->withErrors(['error' => $data['errors']]);
             }
 
             Session::put('api_token', $data['token']);
@@ -54,9 +57,15 @@ class AuthController extends Controller
             $response = $e->getResponse();
             $errorBody = json_decode($response->getBody()->getContents(), true);
             
-            return back()->withErrors($errorBody['errors'] ?? ['error' => __('auth.error')]);
+            return back()
+                ->withInput()
+                ->withErrors(
+                    $errorBody['errors'] ?? ['error' => __('auth.error')]
+                );
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => __('auth.error')]);
+            return back()
+                ->withInput()
+                ->withErrors(['error' => __('auth.error')]);
         }
     }
 
@@ -90,7 +99,12 @@ class AuthController extends Controller
 
             return redirect()->route('weather.search');
         } catch (\Exception $e) {
-            return back()->withErrors(['email' => __('auth.failed')]);
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'email' => __('auth.failed'),
+                    'password' => __('auth.failed')
+                ]);
         }
     }
 

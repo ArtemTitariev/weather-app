@@ -1,16 +1,15 @@
-@props(['type' => 'text', 'name', 'value' => '', 'class' => 'w-full p-2 border rounded mt-1', 'errorClass' => 'border-danger'])
-
 @php
-    // Об'єднання стилів у залежності від наявності помилки
-    $inputClass = $class;
+    $class = 'w-full p-2 border rounded mt-1';
+
     if ($errors->has($name)) {
-        $inputClass .= ' ' . $errorClass;
+        $class .= ' border-danger';
     }
 @endphp
 
-<input type="{{ $type }}" name="{{ $name }}" id="{{ $name }}" value="{{ old($name, $value) }}"
-       class="{{ $inputClass }}"
-       {{ $attributes }}>
+<input {{ $attributes->merge([
+    'value' => old($name),
+    'class' => $class,
+    ]) }}>
 
 @error($name)
     <x-forms.error-message :message="$message" />

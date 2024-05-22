@@ -1,8 +1,5 @@
-@props([
-    'href' => '#',
-    'class' => 'text-primary hover:text-accent',
-])
-
-<a href="{{ $href }}" {{ $attributes->merge(['class' => $class]) }}>
+<a {{ $attributes->merge(
+    ['class' =>'text-primary hover:text-accent'
+    ]) }}>
     {{ $slot }}
 </a>

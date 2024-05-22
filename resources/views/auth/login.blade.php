@@ -9,7 +9,7 @@
     <x-forms.container>
         <x-forms.header>{{ __('Login') }}</x-forms.header>
 
-        <x-forms.error-list />
+        <x-forms.error />
         <form method="POST" action="{{ route('login') }}">
             @csrf
             

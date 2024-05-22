@@ -15,11 +15,10 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware(['api_auth'])->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::prefix('weather')->group(function () {
         Route::get('/search', [WeatherController::class, 'search'])->name('weather.search');
         Route::get('/', [WeatherController::class, 'index'])->name('weather.index');
     });
 });
-

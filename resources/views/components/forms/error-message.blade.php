@@ -1,5 +1,7 @@
-@props(['message', 'class' => ''])
+@props(['message'])
 
-<p class="text-danger text-sm mt-1 {{ $class }}">
+<p {{ $attributes->merge([
+    'class' => 'text-danger text-sm mt-1'
+    ]) }}>
     {{ $message }}
 </p>
