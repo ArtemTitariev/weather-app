@@ -3,6 +3,8 @@
 @section('title'){{ __('Login') }}@endsection
 
 @section('content')
+<x-navbar />
+
 <div class="min-h-screen flex items-center justify-center">
     <x-forms.container>
         <x-forms.header>{{ __('Login') }}</x-forms.header>
@@ -25,9 +27,9 @@
         
         </form>
         <x-forms.p-with-link
-            text="{{ __('Already have an account?') }}"
-            linkText="{{ __('Login') }}"
-            href="{{ route('login') }}"
+            text="{{ __('Do not have an account?') }}"
+            linkText="{{ __('Register') }}"
+            href="{{ route('register') }}"
         />
     </x-forms.container>
 </div>

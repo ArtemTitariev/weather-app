@@ -7,8 +7,10 @@
     @vite('resources/css/app.css')
     @yield('resources')
 </head>
-<body class="bg-light font-sans">
-    @yield('content')
+<body class="bg-light font-sans min-h-screen flex flex-col">
+    <main class="flex-grow">
+        @yield('content')
+    </main>
 
     @vite('resources/js/app.js')
 </body>
