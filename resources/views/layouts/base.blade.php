@@ -8,12 +8,12 @@
     @yield('resources')
 </head>
 <body class="bg-light font-sans min-h-screen flex flex-col">
-    <x-navbar />
-    
     <main class="flex-grow">
-        @yield('content') 
+
+        @yield('content')
+
     </main>
-    <x-footer/>
+
     @vite('resources/js/app.js')
 </body>
 </html>

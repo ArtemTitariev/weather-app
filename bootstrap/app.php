@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Middleware\AttachApiToken;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,7 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->web(append: [
-            AttachApiToken::class,
+            App\Http\Middleware\AttachApiToken::class,
+        ]);
+        $middleware->appendToGroup('api_auth', [
+            \App\Http\Middleware\ApiAuthentication::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

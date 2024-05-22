@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.base')
 
 @section('title'){{ __('Register') }}@endsection
 
@@ -30,7 +30,7 @@
             
             <x-forms.input-container>
                 <x-forms.label for="password_confirmation">{{  __('Confirm password') }}</x-forms.label>
-                <x-forms.input type="password_confirmation" name="password_confirmation" />
+                <x-forms.input type="password" name="password_confirmation" />
             </x-forms.input-container>
 
             <x-forms.button>{{ __('Register') }}</x-forms.button>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\ApiClient;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -47,13 +48,13 @@ class AuthController extends Controller
             
             $user = new \App\Models\User($data['user']);
             Session::put('user', $user);
-
-            return redirect()->route('home'); // Змінити на потрібний маршрут після реєстрації
+            
+            return redirect()->route('weather.search');
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             $response = $e->getResponse();
             $errorBody = json_decode($response->getBody()->getContents(), true);
             
-            return back()->withErrors($errorBody['errors'] ?? ['error' => __('auth.error')]);;
+            return back()->withErrors($errorBody['errors'] ?? ['error' => __('auth.error')]);
         } catch (\Exception $e) {
             return back()->withErrors(['error' => __('auth.error')]);
         }
@@ -87,7 +88,7 @@ class AuthController extends Controller
             $user = new \App\Models\User($data['user']);
             Session::put('user', $user);
 
-            return redirect()->route('home'); // Змінити на потрібний маршрут після авторизації
+            return redirect()->route('weather.search');
         } catch (\Exception $e) {
             return back()->withErrors(['email' => __('auth.failed')]);
         }
