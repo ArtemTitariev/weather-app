@@ -3,6 +3,8 @@
 @section('title'){{ __('Register') }}@endsection
 
 @section('content')
+<x-navbar />
+
 <div class="min-h-screen flex items-center justify-center">
     <x-forms.container>
         <x-forms.header>{{ __('Register') }}</x-forms.header>

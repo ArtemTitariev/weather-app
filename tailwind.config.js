@@ -18,6 +18,7 @@ module.exports = {
         info: '#3B82F6',
         light: '#F3F4F6',
         dark: '#111827',
+        gray: 'rgb(55 65 81)',
       },
       fontFamily: {
         sans: ['ui-sans-serif', 'system-ui', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'],
