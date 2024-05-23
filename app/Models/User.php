@@ -17,6 +17,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
@@ -40,6 +41,7 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
+            'id' => 'int',
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\WeatherController;
 
 Route::get('/', function () {
@@ -17,8 +18,10 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware(['api_auth'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+    Route::get('/city/{id}', [CityController::class, 'show'])->name('city.show');
+    
     Route::prefix('weather')->group(function () {
-        Route::get('/search', [WeatherController::class, 'search'])->name('weather.search');
+        Route::get('/search', [CityController::class, 'index'])->name('weather.search');
         Route::get('/', [WeatherController::class, 'index'])->name('weather.index');
     });
 });
