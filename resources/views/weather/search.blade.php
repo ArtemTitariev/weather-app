@@ -4,50 +4,50 @@
 
 @section('content')
 <div class="container mx-auto px-4">
-    <h1 class="text-3xl font-bold mb-4 text-center">Search for Weather Data</h1>
+    <h1 class="text-3xl font-bold mb-4 text-center">{{ __('Search for Weather Data') }}</h1>
 
     <div class="grid grid-cols-3 gap-4 mb-4">
         <div id="step-1" class="bg-primary text-white p-4 rounded text-center">
-            <h2 class="font-bold text-xl">Крок 1</h2>
-            <p>Оберіть дати</p>
+            <h2 class="font-bold text-xl">{{ __('Step 1') }}</h2>
+            <p>{{ __('Select the dates') }}</p>
         </div>
         <div id="step-2" class="bg-primary text-white p-4 rounded text-center">
-            <h2 class="font-bold text-xl">Крок 2</h2>
-            <p>Оберіть місто</p>
+            <h2 class="font-bold text-xl">{{ __('Step 2') }}</h2>
+            <p>{{ __('Select a city') }}</p>
         </div>
         <div id="step-3" class="bg-primary text-white p-4 rounded text-center">
-            <h2 class="font-bold text-xl">Крок 3</h2>
-            <p>Виконайте пошук</p>
+            <h2 class="font-bold text-xl">{{ __('Step 3') }}</h2>
+            <p>{{ __('Perform a search') }}</p>
         </div>
     </div>
 
     <form method="GET" action="{{ route('weather.index') }}" id="search-form" class="mb-4">
         @csrf
         <x-forms.input-container>
-            <x-forms.label for="start_date" class="block text-gray-700">Start Date</x-forms.label>
-            <x-forms.input type="date" id="start_date" name="start_date" required />
-        </x-forms.input-container>
-
-        <x-forms.input-container>
-            <x-forms.label for="end_date" class="block text-gray">End Date</x-forms.label>
-            <x-forms.input type="date" id="end_date" name="end_date" required />
-        </x-forms.input-container>
-
-        <x-forms.input-container>
-            <x-forms.label for="city_search" class="block text-gray ">Search City</x-forms.label>
-            <x-forms.input type="text" id="city_search" name="city_search" placeholder="Type to search..." />
+            <x-forms.button type="submit" id="submit-button" disabled class="bg-primary text-white hover:bg-accent">{{ __('Search for weather data') }}</x-forms.button>
         </x-forms.input-container>
         
         <x-forms.input-container>
-            <x-forms.button type="submit" id="submit-button" disabled class="bg-primary text-white hover:bg-accent">Search</x-forms.button>
+            <x-forms.label for="start_date" class="block text-gray-700">{{ __('Start Date') }}</x-forms.label>
+            <x-forms.input type="date" id="start_date" name="start_date" required max="{{ date('Y-m-d') }}" />
+        </x-forms.input-container>
+
+        <x-forms.input-container>
+            <x-forms.label for="end_date" class="block text-gray">{{ __('End Date') }}</x-forms.label>
+            <x-forms.input type="date" id="end_date" name="end_date" required max="{{ date('Y-m-d') }}" />
+        </x-forms.input-container>
+
+        <x-forms.input-container>
+            <x-forms.label {{-- for="city_search" --}} class="block text-gray ">{{ __('Search City') }}</x-forms.label>
+            <x-forms.input type="text" id="city_search" {{-- name="city_search" --}} placeholder="{{ __('Type to search...') }}" />
         </x-forms.input-container>
 
         <div id="cities_list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
             @foreach ($cities as $city)
                 <label class="city-card p-4 border border-primary rounded bg-white shadow block cursor-pointer">
                     <h2 class="text-xl font-bold">{{ $city->name }}</h2>
-                    <p>Latitude: {{ $city->lat }}</p>
-                    <p>Longitude: {{ $city->lon }}</p>
+                    <p>{{ __('Latitude') }}: {{ $city->lat }}</p>
+                    <p>{{ __('Longitude') }}: {{ $city->lon }}</p>
                     <input type="radio" name="city_id" value="{{ $city->id }}" required class="hidden">
                 </label>
             @endforeach
@@ -90,6 +90,10 @@ $(document).ready(function() {
         $(this).find('h2').addClass('text-secondary');
         $(this).find('input[type="radio"]').prop('checked', true);
         combined(formId);
+
+        // let cityId = $(this).find('input[type="radio"]').val();
+        // let url = '{{ url("/city") }}' + '/' + cityId;
+        // $('#search-form').attr('action', url);
     });
 
     $('#city_search').keyup(function() {
