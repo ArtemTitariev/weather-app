@@ -2,11 +2,6 @@
 
 @section('title'){{ __('Cities') }}@endsection
 
-@section('resources')
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-@endsection
-
 @section('content')
 <div class="container mx-auto px-4">
     <h1 class="text-3xl font-bold mb-4 text-center">Search for Weather Data</h1>
@@ -65,43 +60,6 @@
 @section('scripts')
 <script type="text/javascript">
 
-function checkRequiredFields(formId) {
-    let isFormValid = true;
-
-    $(`#${formId} [required]`).each(function() {
-        const fieldType = $(this).attr('type');
-
-        if (fieldType === 'radio' || fieldType === 'checkbox') {
-            if (!$(`input[name="${$(this).attr('name')}"]:checked`).length) {
-                isFormValid = false;
-            }
-        } else if ($(this).is('select')) {
-            if ($(this).val() === null || $(this).val() === '') {
-                isFormValid = false;
-            }
-        } else {
-            if ($(this).is(':invalid') || $(this).val() === '') {
-                isFormValid = false;
-            }
-        }
-    });
-
-    return isFormValid;
-}
-
-function checkFormValidity(formId) {
-    let isFormValid = checkRequiredFields(formId);
-    $(`#${formId} #submit-button`).prop('disabled', !isFormValid);
-
-    if (isFormValid) {
-        $(`#${formId} #submit-button`).removeClass('bg-gray cursor-not-allowed').addClass('bg-primary hover:bg-accent cursor-pointer');
-    } else {
-        $(`#${formId} #submit-button`).removeClass('bg-primary hover:bg-accent cursor-pointer').addClass('bg-gray cursor-not-allowed');
-    }
-
-    updateStepStyles(formId);
-}
-
 function updateStepStyles(formId) {
     if ($(`#${formId} #start_date`).val() && $(`#${formId} #end_date`).val()) {
         $('#step-1').removeClass('bg-primary').addClass('bg-secondary');
@@ -131,7 +89,6 @@ $(document).ready(function() {
         $(this).removeClass('border-primary').addClass('border-secondary');
         $(this).find('h2').addClass('text-secondary');
         $(this).find('input[type="radio"]').prop('checked', true);
-        // checkFormValidity(formId);
         combined(formId);
     });
 
