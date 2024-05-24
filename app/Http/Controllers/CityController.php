@@ -32,7 +32,7 @@ class CityController extends Controller
             
             return back()->withErrors($errorBody['errors']);
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => $e->getMessage()]);
+            return back()->withErrors(['error' => __('Something went wrong. Please, try again.')]);
         }
     }
 

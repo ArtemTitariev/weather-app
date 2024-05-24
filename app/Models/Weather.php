@@ -17,7 +17,8 @@ class Weather extends Model
         'wind_speed',
         'clouds',
         'humidity',
-        'pressure'
+        'pressure',
+        'icon',
     ];
 
     protected $casts = [

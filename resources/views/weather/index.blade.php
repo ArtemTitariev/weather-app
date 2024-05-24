@@ -41,35 +41,35 @@
                 <img src="{{ asset('images/temperature-icon.png') }}" alt="Temperature" class="w-12 h-12 mr-4">
                 <div>
                     <h5 class="text-lg font-semibold text-secondary">{{ __('Average Temperature') }}</h5>
-                    <p class="text-2xl">{{-- {{ $averageTemperature }} --}} °C</p>
+                    <p class="text-2xl">{{ $average["temperature"] }} °C</p>
                 </div>
             </div>
             <div class="bg-light p-4 rounded shadow flex items-center">
                 <img src="{{ asset('images/wind-speed-icon.png') }}" alt="Wind Speed" class="w-12 h-12 mr-4">
                 <div>
                     <h5 class="text-lg font-semibold text-secondary">{{ __('Average Wind Speed') }}</h5>
-                    <p class="text-2xl">{{-- {{ $averageWindSpeed }} --}} {{ __('m/s') }}</p>
+                    <p class="text-2xl">{{ $average["wind_speed"] }} {{ __('m/s') }}</p>
                 </div>
             </div>
             <div class="bg-light p-4 rounded shadow flex items-center">
                 <img src="{{ asset('images/clouds-icon.png') }}" alt="Clouds" class="w-12 h-12 mr-4">
                 <div>
                     <h5 class="text-lg font-semibold text-secondary">{{ __('Average Clouds') }}</h5>
-                    <p class="text-2xl">{{-- {{ $averageClouds }} --}} %</p>
+                    <p class="text-2xl">{{ $average["clouds"] }} %</p>
                 </div>
             </div>
             <div class="bg-light p-4 rounded shadow flex items-center">
                 <img src="{{ asset('images/humidity-icon.png') }}" alt="Humidity" class="w-12 h-12 mr-4">
                 <div>
                     <h5 class="text-lg font-semibold text-secondary">{{ __('Average Humidity') }}</h5>
-                    <p class="text-2xl">{{-- {{ $averageHumidity }} --}} %</p>
+                    <p class="text-2xl">{{ $average["humidity"] }} %</p>
                 </div>
             </div>
             <div class="bg-light p-4 rounded shadow flex items-center">
                 <img src="{{ asset('images/pressure-icon.png') }}" alt="Pressure" class="w-12 h-12 mr-4">
                 <div>
                     <h5 class="text-lg font-semibold text-secondary">{{ __('Average Pressure') }}</h5>
-                    <p class="text-2xl">{{-- {{ $averagePressure }}  --}} {{ __('mmHg') }}</p>
+                    <p class="text-2xl">{{ $average["pressure"] }}  {{ __('mmHg') }}</p>
                 </div>
             </div>
         </div>
