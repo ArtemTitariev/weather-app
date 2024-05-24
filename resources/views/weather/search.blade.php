@@ -22,7 +22,7 @@
     </div>
 
     <form method="GET" action="{{ route('weather.index') }}" id="search-form" class="mb-4">
-        @csrf
+        {{-- @csrf --}}
         <x-forms.input-container>
             <x-forms.button type="submit" id="submit-button" disabled class="bg-primary text-white hover:bg-accent">{{ __('Search for weather data') }}</x-forms.button>
         </x-forms.input-container>

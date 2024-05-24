@@ -22,10 +22,10 @@ class Weather extends Model
 
     protected $casts = [
         'id' => 'int',
-        'date' => 'timestamp',
+        'date' => 'date',
         'city_id' => 'int',
         'temperature' => 'int',
-        'temperature' => 'double',
+        'wind_speed' => 'float',
         'clouds' => 'int',
         'humidity' => 'int',
         'pressure' => 'int',
