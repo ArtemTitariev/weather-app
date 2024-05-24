@@ -1,3 +1,7 @@
+@props([
+    'name' => ''
+])
+
 @php
     $class = 'w-full p-2 border rounded mt-1';
 
@@ -6,7 +10,7 @@
     }
 @endphp
 
-<input {{ $attributes->merge([
+<input name="{{$name}}" {{ $attributes->merge([
     'value' => old($name),
     'class' => $class,
     ]) }}>
