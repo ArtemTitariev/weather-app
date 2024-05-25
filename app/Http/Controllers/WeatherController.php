@@ -46,6 +46,9 @@ class WeatherController extends Controller
 
         $cityController = new CityController($this->client);
         $city = $cityController->show($request, $cityId);
+        if ($city instanceof \Illuminate\Http\RedirectResponse) {
+            return $city;
+        }
 
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
@@ -66,9 +69,13 @@ class WeatherController extends Controller
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             $response = $e->getResponse();
             $errorBody = json_decode($response->getBody()->getContents(), true);
-            return back()->withErrors($errorBody['errors']);
+            return back()
+                ->withInput()
+                ->withErrors($errorBody['errors']);
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => __('Something went wrong. Please, try again.')]);
+            return back()
+                ->withInput()
+                ->withErrors(['error' => __('errors.unknown')]);
         }
 
         $dates = [];

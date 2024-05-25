@@ -60,12 +60,12 @@ class AuthController extends Controller
             return back()
                 ->withInput()
                 ->withErrors(
-                    $errorBody['errors'] ?? ['error' => __('auth.error')]
+                    $errorBody['errors'] ?? ['error' => __('errors.unknown')]
                 );
         } catch (\Exception $e) {
             return back()
                 ->withInput()
-                ->withErrors(['error' => __('auth.error')]);
+                ->withErrors(['error' => __('errors.unknown')]);
         }
     }
 
@@ -118,7 +118,7 @@ class AuthController extends Controller
 
             return redirect()->route('home');
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => __('auth.error')]);
+            return back()->withErrors(['error' => __('errors.unknown')]);
         }
     }
 }

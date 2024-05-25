@@ -30,9 +30,13 @@ class CityController extends Controller
             $response = $e->getResponse();
             $errorBody = json_decode($response->getBody()->getContents(), true);
             
-            return back()->withErrors($errorBody['errors']);
+            return back()
+                ->withInput()
+                ->withErrors($errorBody['errors']);
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => __('Something went wrong. Please, try again.')]);
+            return back()
+                ->withInput()
+                ->withErrors(['error' => __('errors.unknown')]);
         }
     }
 
@@ -43,14 +47,18 @@ class CityController extends Controller
             $cityData = json_decode($response->getBody(), true)['data'];
             
             return new City($cityData);
-
+           
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             $response = $e->getResponse();
             $errorBody = json_decode($response->getBody()->getContents(), true);
             
-            return back()->withErrors($errorBody['errors']);
+            return back()
+                ->withInput()
+                ->withErrors($errorBody['errors']);
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => $e->getMessage()]);
+            return back()
+                ->withInput()
+                ->withErrors(['error' => __('errors.unknown')]);
         }
     }
 }
