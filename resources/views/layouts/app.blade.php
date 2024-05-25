@@ -7,6 +7,8 @@
     @vite('resources/css/app.css')
     <!-- jQuery -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     @yield('resources')
 </head>
 <body class="bg-light font-sans min-h-screen flex flex-col">

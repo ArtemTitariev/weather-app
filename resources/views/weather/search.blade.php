@@ -44,16 +44,20 @@
             <x-forms.input type="text" id="city_search" {{-- name="city_search" --}} placeholder="{{ __('Type to search...') }}" />
         </x-forms.input-container>
 
-        <div id="cities_list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            @foreach ($cities as $city)
-                <label class="city-card p-4 border border-primary rounded bg-white shadow block cursor-pointer">
-                    <h2 class="text-xl font-bold">{{ $city->name }}</h2>
-                    <p>{{ __('Latitude') }}: {{ $city->lat }}</p>
-                    <p>{{ __('Longitude') }}: {{ $city->lon }}</p>
-                    <input type="radio" name="city_id" value="{{ $city->id }}" required class="hidden">
-                </label>
-            @endforeach
-        </div>
+        @if ($cities->isEmpty())
+            <x-warning title="{{ __('Notice') }}" message="{{ __('No cities available for selection.') }}" />
+        @else
+            <div id="cities_list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                @foreach ($cities as $city)
+                    <label class="city-card p-4 border border-primary rounded bg-white shadow block cursor-pointer">
+                        <h2 class="text-xl font-bold">{{ $city->name }}</h2>
+                        <p>{{ __('Latitude') }}: {{ $city->lat }}</p>
+                        <p>{{ __('Longitude') }}: {{ $city->lon }}</p>
+                        <input type="radio" name="city_id" value="{{ $city->id }}" required class="hidden">
+                    </label>
+                @endforeach
+            </div>
+        @endif
     </form>
 </x-container>
 
@@ -61,6 +65,16 @@
 
 @section('scripts')
 <script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+    @if ($cities->isEmpty())
+        showAlert(
+            'warning', 
+            '{{ __("No Cities Available") }}', 
+            '{{ __("There are currently no cities available for selection. Please try again later.") }}',
+            '{{ __("Ok") }}'
+        );
+    @endif
+});
 
 function updateStepStyles(formId) {
     if ($(`#${formId} #start_date`).val() && $(`#${formId} #end_date`).val()) {

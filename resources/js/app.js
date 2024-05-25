@@ -34,3 +34,12 @@ window.checkFormValidity = function(formId) {
         $(`#${formId} #submit-button`).removeClass('bg-primary hover:bg-accent cursor-pointer').addClass('bg-gray cursor-not-allowed');
     }
 }
+
+window.showAlert = function(icon, title, text, confirmButtonText = 'Ok') {
+    Swal.fire({
+        icon: icon,
+        title: title,
+        text: text,
+        confirmButtonText: confirmButtonText
+    });
+}
