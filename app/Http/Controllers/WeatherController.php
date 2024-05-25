@@ -75,9 +75,11 @@ class WeatherController extends Controller
             return $this->backWithUnknownError();
         }
 
-        $dates = [];
-        $temperatures = [];
-        $windSpeeds = [];
+        $graphData = [
+            'dates' => [],
+            'temperatures' => [],
+            'windSpeeds' => [],
+        ];
 
         $average = [
             "temperature" => 0, 
@@ -87,10 +89,10 @@ class WeatherController extends Controller
             "pressure" => 0, 
         ];
 
-        $weather = collect($weatherData)->map(function ($data) use (&$dates, &$temperatures, &$windSpeeds, &$average) {
-            $dates[] = Carbon::parse($data["date"])->format('d.m');
-            $temperatures[] = $data["temperature"];
-            $windSpeeds[] = $data["wind_speed"];
+        $weather = collect($weatherData)->map(function ($data) use (&$graphData, &$average) {
+            $graphData["dates"][] = Carbon::parse($data["date"])->format('d.m');
+            $graphData["temperatures"][] = $data["temperature"];
+            $graphData["windSpeeds"][] = $data["wind_speed"];
 
             $weather = new Weather($data);
             if ($data["clouds"] >= 60) {
@@ -118,7 +120,11 @@ class WeatherController extends Controller
             }, $average);
         }
             
-        return view('weather.index', compact('city', 'weather', 'startDate', 'endDate', 'average', 'dates', 'temperatures', 'windSpeeds'));
+        // Group by months
+        $groupedWeather = $weather->groupBy(function ($item) {
+            return Carbon::parse($item->date)->format('F Y');
+        });
+
+        return view('weather.index', compact('city', 'groupedWeather', 'startDate', 'endDate', 'average', 'graphData'));
     }
 }
-

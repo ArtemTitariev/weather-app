@@ -39,7 +39,7 @@
         </div>
 
         <div class="w-full lg:w-1/2 px-4">
-            @if ($weather->isEmpty())
+            @if ($groupedWeather->isEmpty())
                 <x-warning title="{{ __('Notice') }}" message="{{ __('No average weather data available.') }}" class="mt-8" />
             @else
                 <div class="grid grid-cols-2 gap-4">
@@ -85,7 +85,7 @@
         
     </div>
 
-    @if ($weather->isEmpty())
+    @if ($groupedWeather->isEmpty())
             <x-warning title="{{ __('Notice') }}" message="{{ __('No weather data available.') }}" class="mt-8" />
     @else
         <div class="w-full mt-8 flex justify-center">
@@ -93,9 +93,8 @@
         </div>
 
         <div class="mt-8">
-            {{-- @foreach($groupedWeatherData as $month => $weather) --}}
-            @for($i = 0; $i < 3; ++$i)
-                <h3 class="text-xl font-bold mt-6 text-secondary">{{-- $month --}} {{ __('month') }}</h3>
+            @foreach($groupedWeather as $month => $weather)
+                <h3 class="text-xl font-bold mt-6 text-secondary">{{ $month }}</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-4">
                     @foreach($weather as $day)
                         <div class="bg-gray-200 p-3 rounded shadow">
@@ -128,8 +127,7 @@
                         </div>
                     @endforeach
                 </div>
-            @endfor
-            {{-- @endforeach --}}
+            @endforeach
         </div>
     @endif
 </x-container>
@@ -139,7 +137,7 @@
 @section('scripts')
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function() {
-    @if ($weather->isEmpty())
+    @if ($groupedWeather->isEmpty())
         showAlert(
             'warning', 
             '{{ __("No Weather Data Available") }}', 
@@ -154,17 +152,17 @@ $(document).ready(function() {
     var weatherChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: {!! json_encode($dates) !!},
+            labels: {!! json_encode($graphData["dates"]) !!},
             datasets: [
                 {
-                    label: "{{ __('Temperature') }}",
-                    data: {!! json_encode($temperatures) !!},
+                    label: "{{ __('Temperature') }} (°C)",
+                    data: {!! json_encode($graphData["temperatures"]) !!},
                     borderColor: '#2563EB',
                     borderWidth: 3
                 },
                 {
-                    label: "{{ __('Wind Speed') }}",
-                    data: {!! json_encode($windSpeeds) !!},
+                    label: "{{ __('Wind Speed') }} ({{ __('m/s')}})",
+                    data: {!! json_encode($graphData["windSpeeds"]) !!},
                     borderColor: '#D97706',
                     borderWidth: 3
                     
@@ -174,7 +172,17 @@ $(document).ready(function() {
         options: {
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: '{{ __("Value") }}'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: '{{ __("Date") }}'
+                    }
                 }
             }
         }
