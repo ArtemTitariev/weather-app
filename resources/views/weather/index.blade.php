@@ -14,6 +14,10 @@
     <div class="flex flex-wrap -mx-4">
         <div class="w-full lg:w-1/2 px-4 mb-4 lg:mb-0">
             <h2 class="text-2xl font-bold text-accent">{{ $city->name }}</h2>
+            <h5 class="pt-4 text-xl font-semibold text-accent">
+                {{ \Carbon\Carbon::parse($startDate)->format('d.m.Y') }} - 
+                {{ \Carbon\Carbon::parse($endDate)->format('d.m.Y') }}
+            </h5>
             {{-- <p>Координати: {{ $city->lat }}, {{ $city->lon }}</p> --}}
             <form method="GET" action="{{ route('weather.index') }}" class="mt-4">
 

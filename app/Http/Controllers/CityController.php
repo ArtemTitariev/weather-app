@@ -30,13 +30,9 @@ class CityController extends Controller
             $response = $e->getResponse();
             $errorBody = json_decode($response->getBody()->getContents(), true);
             
-            return back()
-                ->withInput()
-                ->withErrors($errorBody['errors']);
+            return $this->backWithError($errorBody);
         } catch (\Exception $e) {
-            return back()
-                ->withInput()
-                ->withErrors(['error' => __('errors.unknown')]);
+            return $this->backWithUnknownError();
         }
     }
 
@@ -52,13 +48,9 @@ class CityController extends Controller
             $response = $e->getResponse();
             $errorBody = json_decode($response->getBody()->getContents(), true);
             
-            return back()
-                ->withInput()
-                ->withErrors($errorBody['errors']);
+            return $this->backWithError($errorBody);
         } catch (\Exception $e) {
-            return back()
-                ->withInput()
-                ->withErrors(['error' => __('errors.unknown')]);
+            return $this->backWithUnknownError();
         }
     }
 }
