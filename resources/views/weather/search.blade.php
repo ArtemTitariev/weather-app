@@ -3,7 +3,9 @@
 @section('title'){{ __('Cities') }}@endsection
 
 @section('content')
-<div class="container mx-auto px-4">
+<x-container>
+    <x-alert/>
+
     <h1 class="text-3xl font-bold mb-4 text-center">{{ __('Search for Weather Data') }}</h1>
 
     <div class="grid grid-cols-3 gap-4 mb-4">
@@ -53,7 +55,7 @@
             @endforeach
         </div>
     </form>
-</div>
+</x-container>
 
 @endsection
 
