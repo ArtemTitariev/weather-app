@@ -1,5 +1,5 @@
-<a {{ $attributes->merge(
-    ['class' =>'text-primary hover:text-accent'
+<a {{ $attributes->merge([
+        'class' =>'text-primary hover:text-accent'
     ]) }}>
     {{ $slot }}
 </a>

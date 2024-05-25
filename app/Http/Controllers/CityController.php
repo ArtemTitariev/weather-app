@@ -30,9 +30,9 @@ class CityController extends Controller
             $response = $e->getResponse();
             $errorBody = json_decode($response->getBody()->getContents(), true);
             
-            return back()->withErrors($errorBody['errors']);
+            return $this->backWithError($errorBody);
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => $e->getMessage()]);
+            return $this->backWithUnknownError();
         }
     }
 
@@ -43,14 +43,14 @@ class CityController extends Controller
             $cityData = json_decode($response->getBody(), true)['data'];
             
             return new City($cityData);
-
+           
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             $response = $e->getResponse();
             $errorBody = json_decode($response->getBody()->getContents(), true);
             
-            return back()->withErrors($errorBody['errors']);
+            return $this->backWithError($errorBody);
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => $e->getMessage()]);
+            return $this->backWithUnknownError();
         }
     }
 }

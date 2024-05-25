@@ -41,11 +41,12 @@ class AuthController extends Controller
             ]);
             $data = json_decode($response->getBody(), true);
 
-            if (isset($data['errors'])) {  
-                return back()
-                    ->withInput()
-                    ->withErrors(['error' => $data['errors']]);
-            }
+            // if (isset($data['errors'])) {  
+            //     return back()
+            //         ->withInput()
+            //         ->withErrors(['error' => $data['errors']]);
+            // }
+            return $this->backWithError($response->getBody());
 
             Session::put('api_token', $data['token']);
             
@@ -57,15 +58,9 @@ class AuthController extends Controller
             $response = $e->getResponse();
             $errorBody = json_decode($response->getBody()->getContents(), true);
             
-            return back()
-                ->withInput()
-                ->withErrors(
-                    $errorBody['errors'] ?? ['error' => __('auth.error')]
-                );
+            return $this->backWithError($errorBody);
         } catch (\Exception $e) {
-            return back()
-                ->withInput()
-                ->withErrors(['error' => __('auth.error')]);
+            return $this->backWithUnknownError();
         }
     }
 
@@ -118,7 +113,7 @@ class AuthController extends Controller
 
             return redirect()->route('home');
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => __('auth.error')]);
+            return $this->backWithUnknownError();
         }
     }
 }
