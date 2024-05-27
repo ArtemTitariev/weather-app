@@ -16,7 +16,7 @@ class ApiAuthentication
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Session::has('api_token')) {
+        if (Session::get('user')?->access_token) {
             return $next($request);
         }
 

@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Session;
 
 class ApiClient
 {
@@ -14,7 +15,7 @@ class ApiClient
 
     public function request($method, $uri = '', array $options = [])
     {
-        if ($token = session('api_token')) {
+        if ($token = Session::get('user')->access_token ?? '') {
             $options['headers']['Authorization'] = 'Bearer ' . $token;
         }
 

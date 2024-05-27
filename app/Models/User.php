@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'access_token',
     ];
 
     /**
@@ -30,7 +31,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**
@@ -42,7 +42,6 @@ class User extends Authenticatable
     {
         return [
             'id' => 'int',
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
     }

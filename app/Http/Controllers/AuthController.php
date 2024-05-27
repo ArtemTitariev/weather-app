@@ -41,16 +41,12 @@ class AuthController extends Controller
             ]);
             $data = json_decode($response->getBody(), true);
 
-            // if (isset($data['errors'])) {  
-            //     return back()
-            //         ->withInput()
-            //         ->withErrors(['error' => $data['errors']]);
-            // }
             return $this->backWithError($response->getBody());
 
-            Session::put('api_token', $data['token']);
-            
+            // Session::put('api_token', $data['token']);
+
             $user = new \App\Models\User($data['user']);
+            $user->access_token = $data['token'];
             Session::put('user', $user);
             
             return redirect()->route('weather.search');
@@ -87,9 +83,10 @@ class AuthController extends Controller
 
             $data = json_decode($response->getBody(), true);
 
-            Session::put('api_token', $data['token']);
+            // Session::put('api_token', $data['token']);
 
             $user = new \App\Models\User($data['user']);
+            $user->access_token = $data['token'];
             Session::put('user', $user);
 
             return redirect()->route('weather.search');
@@ -108,7 +105,7 @@ class AuthController extends Controller
         try {          
             $this->client->request('POST', 'logout');
 
-            Session::forget('api_token');
+            // Session::forget('api_token');
             Session::forget('user');
 
             return redirect()->route('home');
