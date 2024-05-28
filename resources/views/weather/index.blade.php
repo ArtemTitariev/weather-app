@@ -12,7 +12,7 @@
     <x-alert/>
 
     <div class="flex flex-wrap -mx-4">
-        <div class="w-full lg:w-1/2 px-4 mb-4 lg:mb-0">
+        <x-weather.container class="mb-4 lg:mb-0">
             <h2 class="text-2xl font-bold text-accent">{{ $city->name }}</h2>
             <h5 class="pt-4 text-xl font-semibold text-accent">
                 {{ \Carbon\Carbon::parse($startDate)->format('d.m.Y') }} - 
@@ -36,53 +36,46 @@
                 </x-forms.input-container>
 
             </form>
-        </div>
+        </x-weather.container>
 
-        <div class="w-full lg:w-1/2 px-4">
+        <x-weather.container>
             @if ($groupedWeather->isEmpty())
                 <x-warning title="{{ __('Notice') }}" message="{{ __('No average weather data available.') }}" class="mt-8" />
             @else
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-light p-4 rounded shadow flex items-center">
-                        <img src="{{ asset('images/temperature-icon.png') }}" alt="Temperature" class="w-12 h-12 mr-4">
-                        <div>
-                            <h5 class="text-lg font-semibold text-secondary">{{ __('Average Temperature') }}</h5>
-                            <p class="text-2xl">{{ $average["temperature"] }} °C</p>
-                        </div>
-                    </div>
-                    <div class="bg-light p-4 rounded shadow flex items-center">
-                        <img src="{{ asset('images/wind-speed-icon.png') }}" alt="Wind Speed" class="w-12 h-12 mr-4">
-                        <div>
-                            <h5 class="text-lg font-semibold text-secondary">{{ __('Average Wind Speed') }}</h5>
-                            <p class="text-2xl">{{ $average["wind_speed"] }} {{ __('m/s') }}</p>
-                        </div>
-                    </div>
-                    <div class="bg-light p-4 rounded shadow flex items-center">
-                        <img src="{{ asset('images/clouds-icon.png') }}" alt="Clouds" class="w-12 h-12 mr-4">
-                        <div>
-                            <h5 class="text-lg font-semibold text-secondary">{{ __('Average Clouds') }}</h5>
-                            <p class="text-2xl">{{ $average["clouds"] }} %</p>
-                        </div>
-                    </div>
-                    <div class="bg-light p-4 rounded shadow flex items-center">
-                        <img src="{{ asset('images/humidity-icon.png') }}" alt="Humidity" class="w-12 h-12 mr-4">
-                        <div>
-                            <h5 class="text-lg font-semibold text-secondary">{{ __('Average Humidity') }}</h5>
-                            <p class="text-2xl">{{ $average["humidity"] }} %</p>
-                        </div>
-                    </div>
-                    <div class="bg-light p-4 rounded shadow flex items-center">
-                        <img src="{{ asset('images/pressure-icon.png') }}" alt="Pressure" class="w-12 h-12 mr-4">
-                        <div>
-                            <h5 class="text-lg font-semibold text-secondary">{{ __('Average Pressure') }}</h5>
-                            <p class="text-2xl">{{ $average["pressure"] }}  {{ __('mmHg') }}</p>
-                        </div>
-                    </div>
+                    <x-weather.avg.block 
+                        src="{{ asset('images/temperature-icon.png') }}" 
+                        alt="Temperature" 
+                        title="{{ __('Average Temperature') }}" 
+                        text="{{ $average['temperature'] }} °C" 
+                    />
+                    <x-weather.avg.block 
+                        src="{{ asset('images/wind-speed-icon.png') }}" 
+                        alt="Wind Speed" 
+                        title="{{ __('Average Wind Speed') }}" 
+                        text="{{ $average['wind_speed'] }} {{ __('m/s') }}" 
+                    />
+                    <x-weather.avg.block 
+                        src="{{ asset('images/clouds-icon.png') }}" 
+                        alt="Clouds" 
+                        title="{{ __('Average Clouds') }}" 
+                        text="{{ $average['clouds'] }} %" 
+                    />
+                    <x-weather.avg.block 
+                        src="{{ asset('images/humidity-icon.png') }}" 
+                        alt="Humidity" 
+                        title="{{ __('Average Humidity') }}" 
+                        text="{{ $average['humidity'] }} %" 
+                    />
+                    <x-weather.avg.block 
+                        src="{{ asset('images/pressure-icon.png') }}" 
+                        alt="Pressure" 
+                        title="{{ __('Average Pressure') }}" 
+                        text="{{ $average['pressure'] }} {{ __('mmHg') }}" 
+                    />
                 </div>
             @endif
-        </div>  
-        
-        
+        </x-weather.container>  
     </div>
 
     @if ($groupedWeather->isEmpty())
@@ -103,26 +96,35 @@
                                 <h5 class="text-lg font-semibold text-accent">{{ \Carbon\Carbon::parse($day->date)->format('d.m.Y') }}</h5>
                             </div>
                             <div class="grid grid-cols-2 sm:grid-cols-1 gap-2">
-                                <div class="flex items-center mb-2">
-                                    <img src="{{ asset('images/temperature-icon.png') }}" alt="Temperature Icon" class="w-6 h-6 mr-2">
-                                    <p>{{ __('Temperature') }}: {{ $day->temperature }} °C</p>
-                                </div>
-                                <div class="flex items-center mb-2">
-                                    <img src="{{ asset('images/wind-speed-icon.png') }}" alt="Wind Speed Icon" class="w-6 h-6 mr-2">
-                                    <p>{{ __('Wind Speed') }}: {{ $day->wind_speed }} {{ __('m/s') }}</p>
-                                </div>
-                                <div class="flex items-center mb-2">
-                                    <img src="{{ asset('images/clouds-icon.png') }}" alt="Clouds Icon" class="w-6 h-6 mr-2">
-                                    <p>{{ __('Clouds') }}: {{ $day->clouds }} %</p>
-                                </div>
-                                <div class="flex items-center mb-2">
-                                    <img src="{{ asset('images/humidity-icon.png') }}" alt="Humidity Icon" class="w-6 h-6 mr-2">
-                                    <p>{{ __('Humidity') }}: {{ $day->humidity }} %</p>
-                                </div>
-                                <div class="flex items-center mb-2">
-                                    <img src="{{ asset('images/pressure-icon.png') }}" alt="Pressure Icon" class="w-6 h-6 mr-2">
-                                    <p>{{ __('Pressure') }}: {{ $day->pressure }} {{ __('mmHg') }}</p>
-                                </div>
+                                <x-weather.data.block
+                                    src="{{ asset('images/temperature-icon.png') }}" 
+                                    alt="Temperature Icon"
+                                    text="{{ __('Temperature') }}: {{ $day->temperature }} °C"
+                                />
+                                
+                                <x-weather.data.block
+                                    src="{{ asset('images/wind-speed-icon.png') }}"
+                                    alt="Wind Speed Icon"
+                                    text="{{ __('Wind Speed') }}: {{ $day->wind_speed }} {{ __('m/s') }}"
+                                />
+
+                                <x-weather.data.block
+                                    src="{{ asset('images/clouds-icon.png') }}"
+                                    alt="Clouds Icon"
+                                    text="{{ __('Clouds') }}: {{ $day->clouds }} %"
+                                />
+
+                                <x-weather.data.block
+                                    src="{{ asset('images/humidity-icon.png') }}"
+                                    alt="Humidity Icon"
+                                    text="{{ __('Humidity') }}: {{ $day->humidity }} %"
+                                />
+
+                                <x-weather.data.block
+                                    src="{{ asset('images/pressure-icon.png') }}"
+                                    alt="Pressure Icon"
+                                    text="{{ __('Pressure') }}: {{ $day->pressure }} {{ __('mmHg') }}"
+                                />
                             </div>
                         </div>
                     @endforeach

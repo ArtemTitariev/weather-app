@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\ApiClient;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -43,8 +42,6 @@ class AuthController extends Controller
 
             return $this->backWithError($response->getBody());
 
-            // Session::put('api_token', $data['token']);
-
             $user = new \App\Models\User($data['user']);
             $user->access_token = $data['token'];
             Session::put('user', $user);
@@ -60,7 +57,6 @@ class AuthController extends Controller
         }
     }
 
-    // Відображення форми авторизації
     public function showLoginForm()
     {
         return view('auth.login');
@@ -83,8 +79,6 @@ class AuthController extends Controller
 
             $data = json_decode($response->getBody(), true);
 
-            // Session::put('api_token', $data['token']);
-
             $user = new \App\Models\User($data['user']);
             $user->access_token = $data['token'];
             Session::put('user', $user);
@@ -105,7 +99,6 @@ class AuthController extends Controller
         try {          
             $this->client->request('POST', 'logout');
 
-            // Session::forget('api_token');
             Session::forget('user');
 
             return redirect()->route('home');
